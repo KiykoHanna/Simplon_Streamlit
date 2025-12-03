@@ -7,6 +7,7 @@ df = pd.read_csv(path_csv, index_col=0)
 
 
 st.title("Base de donne de jouex videos")
+
 with st.expander("Tache"):
     st.markdown("""
                 ## Chargement et affichage de données
@@ -14,6 +15,7 @@ with st.expander("Tache"):
                     - Afficher un DataFrame Pandas (st.dataframe()).
                     - Afficher un tableau statique (st.table()).
                 """)
+
 st.dataframe(df.head(10), width="stretch")
 
 st.subheader("Statistic")

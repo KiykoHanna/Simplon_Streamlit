@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import plotly.express as px
+import seaborn as sns
 
 path_csv = r"D:\Programmation\Formation_Simplon\BRIEF_2\app\data\vgsales.csv"
 df = pd.read_csv(path_csv, index_col=0)
@@ -21,14 +22,15 @@ column_nb = ["NA_Sales", "JP_Sales", "EU_Sales", "Other_Sales"]
 tab1, tab2, tab3, tab4 = st.tabs(column_nb)
 
 with tab1:
+    st.write("graphique avec Matplotlib ")
     fig, ax = plt.subplots()
     ax.plot(df["NA_Sales"])
     st.pyplot(fig)
 
 with tab2:
-    fig, ax = plt.subplots()
-    ax.plot(df["JP_Sales"])
-    st.plotly_chart(fig)
+    st.write("graphique avec Plotly")
+    fig = px.bar(df[["Name","JP_Sales"]].head(10), x="Name", y="JP_Sales")
+    st.plotly_chart(fig, use_container_width=True)
 
 with tab3:
     fig, ax = plt.subplots()
