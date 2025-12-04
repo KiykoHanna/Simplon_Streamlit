@@ -22,23 +22,27 @@ column_nb = ["NA_Sales", "JP_Sales", "EU_Sales", "Other_Sales"]
 tab1, tab2, tab3, tab4 = st.tabs(column_nb)
 
 with tab1:
-    st.write("graphique avec Matplotlib ")
+    st.write("Graphique avec Matplotlib ")
     fig, ax = plt.subplots()
     ax.plot(df["NA_Sales"])
     st.pyplot(fig)
 
 with tab2:
-    st.write("graphique avec Plotly")
-    fig = px.bar(df[["Name","JP_Sales"]].head(10), x="Name", y="JP_Sales")
+    st.write("Bar plot avec Plotly")
+    fig = px.bar(df[["Name","JP_Sales"]].head(30), x="Name", y="JP_Sales")
     st.plotly_chart(fig, use_container_width=True)
 
 with tab3:
-    fig, ax = plt.subplots()
-    ax.plot(df["EU_Sales"])
+    st.write("Histogramme avec Seaborn")
+    fig, ax = plt.subplots(figsize=(6,4))
+    sns.histplot(data=df.head(15), x= "Name", y="EU_Sales", bins=30, ax=ax)
+    plt.xticks(rotation=90)
     st.pyplot(fig)
 
 with tab4:
-    fig, ax = plt.subplots()
-    ax.plot(df["Other_Sales"])
+    st.write("kdeplot avec Seaborn")
+    fig, ax = plt.subplots(figsize=(6,4))
+    sns.kdeplot(data=df, fill=True, x='Other_Sales')
+    plt.xticks(rotation=90)
     st.pyplot(fig)
 
