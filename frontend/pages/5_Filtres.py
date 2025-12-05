@@ -21,21 +21,23 @@ with st.expander("Tache"):
 
 column_nb = df.select_dtypes(include='number').columns.tolist()
 col = st.selectbox("Choisir la colonne pour filtration", column_nb)
-
+col1, col2 = st.columns(2, width="stretch")
 
 min_val = float(df[col].min())
 max_val = float(df[col].max())
-st.write(f"{min_val} - {max_val}")
+with col1:
+    st.write(f"min = {min_val} _______   max = {max_val}")
 
-level_min, level_max = st.slider(col,
-                                min_value=min_val,
-                                max_value=max_val,
-                                value=(min_val, max_val)
-                                  )
+    level_min, level_max = st.slider(col,
+                                    min_value=min_val,
+                                    max_value=max_val,
+                                    value=(min_val, max_val)
+                                    )
 
-mask = (level_min <= df[col]) & (df[col] <= level_max)
-st.dataframe(df[mask], height=200)
+    mask = (level_min <= df[col]) & (df[col] <= level_max)
+    st.dataframe(df[mask], height=350)
 
-fig, ax = plt.subplots()
-sns.histplot(data=df[col][mask], kde=True)
-st.pyplot(fig)
+with col2:
+    fig, ax = plt.subplots(figsize=(4, 6))
+    sns.histplot(data=df.loc[mask, col], kde=True)
+    st.pyplot(fig)
